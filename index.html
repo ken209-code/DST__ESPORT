@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống DST ESPORT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="registration-section" class="card">
+            <h2>🎮 ĐĂNG KÝ THÔNG TIN</h2>
+            <form id="regForm">
+                <input type="text" id="gameName" placeholder="Tên Game" required>
+                <input type="text" id="gameId" placeholder="ID Game" required>
+                <input type="text" id="zaloName" placeholder="Tên Zalo" required>
+                <input type="tel" id="phone" placeholder="Số điện thoại" required>
+                <button type="submit">GỬI ĐĂNG KÝ</button>
+            </form>
+            <p id="regStatus"></p>
+        </div>
+
+        <div id="login-section" class="card">
+            <h3>🔐 Quản trị viên</h3>
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu...">
+            <button onclick="handleAdminLogin()">VÀO TRANG QUẢN LÝ</button>
+        </div>
+
+        <div id="admin-section" class="card" style="display: none;">
+            <h2>📊 DANH SÁCH ĐĂNG KÝ</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên Game</th><th>ID</th><th>Zalo</th><th>SĐT</th><th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultBody"></tbody>
+                </table>
+            </div>
+            <button onclick="location.reload()" class="btn-back">THOÁT QUẢN LÝ</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
