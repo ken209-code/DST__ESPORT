@@ -1,11 +1,11 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKP_gQjjcNtgMIXFURzpqU4Y5T_Bj6uUcku5V3XXVE2vNEkXPul5hKN1vLtfCIma6A/exec";
 const MASTER_PWD = "mdin_03";
 
-// 1. Xử lý gửi Form Đăng ký
+// 1. XỬ LÝ GỬI FORM (Có chặn trùng)
 document.getElementById('regForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const status = document.getElementById('regStatus');
-    status.innerText = "Đang xử lý dữ liệu... ⏳";
+    status.innerText = "Đang kiểm tra dữ liệu... ⏳";
 
     const data = {
         action: "register",
@@ -19,21 +19,32 @@ document.getElementById('regForm').addEventListener('submit', function(e) {
     .then(res => res.text())
     .then(result => {
         if (result === "Success") {
-            status.style.color = "#4CAF50";
             status.innerText = "Đăng ký thành công! ✅";
+            status.style.color = "#00ff88";
             this.reset();
+        } else if (result === "Duplicate") {
+            status.innerText = "Lỗi: ID Game hoặc SĐT này đã tồn tại! ❌";
+            status.style.color = "#ffcc00";
         } else {
-            status.style.color = "#f44336";
             status.innerText = "Lỗi hệ thống! ❌";
+            status.style.color = "red";
         }
     })
-    .catch(() => {
-        status.style.color = "#f44336";
-        status.innerText = "Lỗi kết nối mạng! ❌";
-    });
+    .catch(() => status.innerText = "Lỗi kết nối mạng! ❌");
 });
 
-// 2. Đăng nhập Admin
+// 2. HÀM TÌM KIẾM TRONG BẢNG ADMIN
+function searchTable() {
+    const filter = document.getElementById("searchInput").value.toUpperCase();
+    const rows = document.querySelectorAll("#adminTable tbody tr");
+
+    rows.forEach(row => {
+        const text = row.innerText.toUpperCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+    });
+}
+
+// 3. ĐĂNG NHẬP VÀ LOAD DỮ LIỆU (Giữ nguyên phần cũ)
 function handleAdminLogin() {
     const password = document.getElementById('adminPassword').value;
     if (password === MASTER_PWD) {
@@ -42,41 +53,36 @@ function handleAdminLogin() {
         document.getElementById('admin-section').style.display = 'block';
         loadAdminData();
     } else {
-        alert("Mật khẩu Admin không chính xác! ❌");
+        alert("Sai mật khẩu! ❌");
     }
 }
 
-// 3. Tải dữ liệu Admin
 function loadAdminData() {
     const body = document.getElementById('resultBody');
-    body.innerHTML = "<tr><td colspan='5'>Đang tải dữ liệu...</td></tr>";
-
+    body.innerHTML = "<tr><td colspan='5'>Đang tải...</td></tr>";
     fetch(`${SCRIPT_URL}?key=${MASTER_PWD}`)
     .then(res => res.json())
     .then(data => {
         if (data.length === 0) {
-            body.innerHTML = "<tr><td colspan='5'>Chưa có dữ liệu.</td></tr>";
+            body.innerHTML = "<tr><td colspan='5'>Trống</td></tr>";
             return;
         }
         body.innerHTML = data.map((row, index) => `
             <tr>
                 <td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td>
-                <td><button onclick="deleteUser(${index})" style="background:red; color:white; border:none; padding:5px; cursor:pointer;">Xóa</button></td>
+                <td><button onclick="deleteUser(${index})" style="background:red; color:white; border:none; padding:5px; cursor:pointer; border-radius:4px;">Xóa</button></td>
             </tr>
         `).join('');
     });
 }
 
-// 4. Xóa dữ liệu
 function deleteUser(index) {
-    if (!confirm("Bạn có chắc chắn muốn xóa?")) return;
-    
+    if (!confirm("Xóa dòng này?")) return;
     fetch(SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify({ action: "deleteRow", rowIndex: index + 1, masterPwd: MASTER_PWD })
-    })
-    .then(() => {
-        alert("Đã xóa thành công! 🗑️");
+    }).then(() => {
+        alert("Đã xóa! 🗑️");
         loadAdminData();
     });
 }

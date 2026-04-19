@@ -52,3 +52,29 @@ th, td { padding: 12px; border: 1px solid #444; text-align: left; font-size: 14p
 th { background: #444; }
 
 .btn-back { background: #666; margin-top: 15px; }
+
+/* Chỉnh sửa cho ô tìm kiếm Admin */
+#searchInput {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    background: #222;
+    color: #00ff88; /* Chữ màu xanh neon cho nổi bật */
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #007bff; /* Đổi màu viền khi nhấn vào */
+    background: #2d2d2d;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+#searchInput::placeholder {
+    color: #888;
+    font-style: italic;
+}
