@@ -1,79 +1,67 @@
-/* Tổng thể khung chứa bảng */
+/* 1. Thiết lập cơ bản cho bảng */
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Tạo thanh cuộn ngang nếu màn hình quá nhỏ */
     margin-top: 15px;
-    background: #2d2d2d;
-    border-radius: 8px;
 }
 
-/* Định dạng bảng */
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 850px; /* Ép bảng rộng ít nhất 850px để các ô không bị ép lại */
     color: white;
 }
 
-/* Định dạng tiêu đề và ô dữ liệu */
 th, td {
-    padding: 12px 10px;
+    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #444;
-    /* QUAN TRỌNG: Ngăn không cho chữ xuống dòng */
-    white-space: nowrap; 
-}
-
-/* Chỉnh riêng độ rộng từng cột để cân đối */
-th:nth-child(1), td:nth-child(1) { min-width: 150px; } /* Tên Game */
-th:nth-child(2), td:nth-child(2) { min-width: 100px; } /* ID */
-th:nth-child(3), td:nth-child(3) { min-width: 120px; } /* Zalo */
-th:nth-child(4), td:nth-child(4) { min-width: 100px; } /* SĐT */
-th:nth-child(5), td:nth-child(5) { min-width: 160px; } /* Ngày đăng ký */
-th:nth-child(6), td:nth-child(6) { min-width: 80px; text-align: center; } /* Thao tác */
-
-/* Tiêu đề bảng */
-thead {
-    background-color: #3d3d3d;
-    position: sticky;
-    top: 0;
 }
 
 th {
-    font-weight: bold;
-    color: #00ff88; /* Màu xanh cho tiêu đề nổi bật */
+    background-color: #3d3d3d;
+    color: #00ff88;
 }
 
-/* Hiệu ứng khi di chuột qua hàng */
-tbody tr:hover {
-    background-color: #383838;
-}
+/* 2. PHẦN QUAN TRỌNG: BIẾN BẢNG THÀNH DẠNG THẺ TRÊN ĐIỆN THOẠI */
+@media screen and (max-width: 600px) {
+    /* Ẩn tiêu đề bảng (vì chúng ta sẽ dùng nhãn tự định nghĩa) */
+    thead {
+        display: none;
+    }
 
-/* Nút Xóa */
-button[onclick*="deleteUser"] {
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
+    /* Biến mỗi hàng thành một khối (card) */
+    tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #555;
+        border-radius: 8px;
+        background: #252525;
+        padding: 10px;
+    }
 
-button[onclick*="deleteUser"]:hover {
-    background: #ff0000;
-    transform: scale(1.05);
-}
+    /* Biến mỗi ô dữ liệu thành một dòng trong card */
+    td {
+        display: block;
+        text-align: right; /* Đẩy giá trị sang phải */
+        border-bottom: 1px solid #333;
+        position: relative;
+        padding-left: 50%; /* Dành chỗ trống bên trái cho nhãn */
+        white-space: normal; /* Cho phép xuống dòng nếu tên quá dài */
+    }
 
-/* Thanh cuộn ngang (tùy chỉnh cho đẹp) */
-.table-container::-webkit-scrollbar {
-    height: 8px;
-}
-.table-container::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 10px;
-}
-.table-container::-webkit-scrollbar-thumb:hover {
-    background: #00ff88;
+    td:last-child {
+        border-bottom: none;
+        text-align: center;
+        padding-left: 12px;
+    }
+
+    /* Tự động thêm tên cột vào bên trái mỗi dòng */
+    td::before {
+        content: attr(data-label); /* Lấy tên cột từ HTML */
+        position: absolute;
+        left: 12px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #00ff88;
+    }
 }
