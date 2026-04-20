@@ -1,67 +1,80 @@
-/* 1. Thiết lập cơ bản cho bảng */
-.table-container {
-    width: 100%;
-    margin-top: 15px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a;
     color: white;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 
-th, td {
+.container { width: 100%; max-width: 600px; }
+
+.card {
+    background: #2d2d2d;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
     padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #444;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #3d3d3d;
+    color: white;
+    box-sizing: border-box;
 }
 
-th {
-    background-color: #3d3d3d;
-    color: #00ff88;
+button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-/* 2. PHẦN QUAN TRỌNG: BIẾN BẢNG THÀNH DẠNG THẺ TRÊN ĐIỆN THOẠI */
-@media screen and (max-width: 600px) {
-    /* Ẩn tiêu đề bảng (vì chúng ta sẽ dùng nhãn tự định nghĩa) */
-    thead {
-        display: none;
-    }
+button:hover { background: #0056b3; }
 
-    /* Biến mỗi hàng thành một khối (card) */
-    tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #555;
-        border-radius: 8px;
-        background: #252525;
-        padding: 10px;
-    }
+.table-container { overflow-x: auto; margin-top: 20px; }
 
-    /* Biến mỗi ô dữ liệu thành một dòng trong card */
-    td {
-        display: block;
-        text-align: right; /* Đẩy giá trị sang phải */
-        border-bottom: 1px solid #333;
-        position: relative;
-        padding-left: 50%; /* Dành chỗ trống bên trái cho nhãn */
-        white-space: normal; /* Cho phép xuống dòng nếu tên quá dài */
-    }
+table { width: 100%; border-collapse: collapse; background: #333; }
 
-    td:last-child {
-        border-bottom: none;
-        text-align: center;
-        padding-left: 12px;
-    }
+th, td { padding: 12px; border: 1px solid #444; text-align: left; font-size: 14px; }
 
-    /* Tự động thêm tên cột vào bên trái mỗi dòng */
-    td::before {
-        content: attr(data-label); /* Lấy tên cột từ HTML */
-        position: absolute;
-        left: 12px;
-        width: 45%;
-        text-align: left;
-        font-weight: bold;
-        color: #00ff88;
-    }
+th { background: #444; }
+
+.btn-back { background: #666; margin-top: 15px; }
+
+/* Chỉnh sửa cho ô tìm kiếm Admin */
+#searchInput {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    background: #222;
+    color: #00ff88; /* Chữ màu xanh neon cho nổi bật */
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #007bff; /* Đổi màu viền khi nhấn vào */
+    background: #2d2d2d;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+#searchInput::placeholder {
+    color: #888;
+    font-style: italic;
 }
