@@ -59,20 +59,31 @@ function handleAdminLogin() {
 
 function loadAdminData() {
     const body = document.getElementById('resultBody');
-    body.innerHTML = "<tr><td colspan='5'>Đang tải...</td></tr>";
+    body.innerHTML = "<tr><td colspan='6'>Đang tải...</td></tr>"; // Đổi colspan thành 6
     fetch(`${SCRIPT_URL}?key=${MASTER_PWD}`)
     .then(res => res.json())
     .then(data => {
         if (data.length === 0) {
-            body.innerHTML = "<tr><td colspan='5'>Trống</td></tr>";
+            body.innerHTML = "<tr><td colspan='6'>Trống</td></tr>";
             return;
         }
-        body.innerHTML = data.map((row, index) => `
-            <tr>
-                <td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td>
-                <td><button onclick="deleteUser(${index})" style="background:red; color:white; border:none; padding:5px; cursor:pointer; border-radius:4px;">Xóa</button></td>
-            </tr>
-        `).join('');
+        body.innerHTML = data.map((row, index) => {
+            // Định dạng lại ngày tháng cho dễ nhìn (ví dụ: dd/mm/yyyy)
+            const dateObj = new Date(row[4]); 
+            const formattedDate = isNaN(dateObj) ? "Chưa có" : dateObj.toLocaleString('vi-VN');
+
+            return `
+                <tr>
+                    <td>${row[0]}</td>
+                    <td>${row[1]}</td>
+                    <td>${row[2]}</td>
+                    <td>${row[3]}</td>
+                    <td>${formattedDate}</td> <td>
+                        <button onclick="deleteUser(${index})" style="background:red; color:white; border:none; padding:5px; cursor:pointer; border-radius:4px;">Xóa</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
     });
 }
 
