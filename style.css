@@ -1,101 +1,94 @@
-/* Tổng thể nền tối như lúc đầu */
+/* Giao diện nền đen cho toàn bộ trang */
 body {
     background-color: #121212;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
 }
 
+/* Các khung đăng ký và quản lý */
 .card {
     background: #1e1e1e;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     margin-bottom: 20px;
+    border: 1px solid #333;
 }
 
-/* PHẦN BẢNG QUAN TRỌNG NHẤT */
+h2, h3 {
+    text-align: center;
+    color: #00ff88;
+}
+
+/* Định dạng các ô nhập liệu (Input) */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #252525;
+    color: white;
+    box-sizing: border-box; /* Giúp input không bị tràn khung */
+}
+
+/* Nút bấm Gửi/Vào trang quản lý */
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #00ff88, #00bd68);
+    border: none;
+    color: #121212;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+}
+
+/* BẢNG DANH SÁCH (Không nhảy chữ, có thanh cuộn) */
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Hiện thanh cuộn ngang khi bảng rộng */
+    overflow-x: auto;
     margin-top: 15px;
-    border: 1px solid #333;
-    border-radius: 8px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    /* Ép bảng có độ rộng tối thiểu 900px để các cột không bị ép lại */
-    min-width: 900px; 
+    min-width: 800px; /* Ép bảng rộng để không nhảy hàng */
 }
 
 th, td {
-    padding: 15px;
+    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #333;
-    /* KHÓA CHỮ: Không cho phép xuống dòng dưới mọi hình thức */
-    white-space: nowrap; 
+    white-space: nowrap; /* Khóa chữ trên một dòng */
 }
 
 th {
-    background-color: #2a2a2a;
     color: #00ff88;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
+    background: #2a2a2a;
 }
 
-td {
-    font-size: 14px;
-    color: #efefef;
-}
-
-/* Tùy chỉnh thanh cuộn ngang cho đẹp giống trong ảnh */
-.table-container::-webkit-scrollbar {
-    height: 8px;
-}
-.table-container::-webkit-scrollbar-track {
-    background: #1e1e1e;
-}
-.table-container::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 10px;
-}
-.table-container::-webkit-scrollbar-thumb:hover {
-    background: #00ff88;
-}
-
-/* Nút Xóa */
-button[onclick*="deleteUser"] {
+/* Nút xóa trong bảng */
+.btn-delete {
     background: #ff4d4d;
     color: white;
-    border: none;
-    padding: 7px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-button[onclick*="deleteUser"]:hover {
-    background: #cc0000;
-}
-
-/* Ô tìm kiếm Admin */
-#searchInput {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    background: #252525;
-    color: white;
-    box-sizing: border-box;
+    padding: 6px 12px;
+    width: auto;
 }
